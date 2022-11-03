@@ -20,14 +20,19 @@ pipeline{
         }
         stage("DEPLOY ON TEST"){
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'tomcat9details', path: '', url: 'http://20.121.120.44:8080')], contextPath: '/app', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat9details', path: '', url: 'http://20.193.151.193:8080')], contextPath: '/app', war: '**/*.war'
                 echo "Deploying On Test Server"
+                echo 'Done'
             }
         }
         stage("DEPLOY ON PROD"){
+            input{
+                message "Should We Continue?" 
+                ok 'Yes We Should!'
+            }
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'tomcat9detail1', path: '', url: 'http://20.193.135.184:8080')], contextPath: '/app', war: '**/*.war'
-                echo 'Hello Prod Server'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat9details1', path: '', url: 'http://20.199.20.50:8080')], contextPath: '/app', war: '**/*.war'
+                echo 'Done! Hello From Prod Server'
             }
         }
     }
@@ -43,3 +48,4 @@ pipeline{
         }
     }
 }
+
